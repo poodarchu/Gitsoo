@@ -7,9 +7,11 @@ SpiderPro实现文档1.0
 通过配置文件Spider_IP.conf设置：起始IP。
 
 爬取结果格式：
-URL,Date,TitleLength，DateLength,Title，Date
+URL,Date,TitleLength，DateLength,Title，Data
 使用/n分割每条记录。
 
 业务流程：
-main：程序每隔一定周期进行一次固定长度的爬取，当爬取数独达到阀值，进行活动[交付]
+main：程序每隔一定周期进行一次固定长度的[爬取]，当爬取数达到阀值，进行活动[交付]。
+爬取：通过URL获内容，并对结果[处理]。
+处理：对内容字符串，消除所有符号和换行，只保留大小写字母和数字，单词通过一个空格分开。
 交付：建立TCP连接到交付IP，交付给程序SavePro，使用协议[Protocol_1]，然后关闭连接。
