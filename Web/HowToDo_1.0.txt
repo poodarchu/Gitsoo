@@ -1,0 +1,12 @@
+Web端实现文档1.0
+
+运行在服务器2。
+在Web文件夹中。
+
+使用Apache软件。
+
+index.html为静态网页，为搜索主页，包括搜索框，并且在点击确认时发送get请求给服务器。
+get请求格式（参考google）：www.gitsoo.com/search?q=haha+ha
+搜索字符串为：haha ha
+
+接收搜索get请求，调用程序Search.php得到结果，生成网页html，返回。
