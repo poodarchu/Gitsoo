@@ -1,0 +1,10 @@
+SavePro实现文档1.0
+
+运行在服务器1。
+在SavePro文件夹中。
+
+通过配置文件Save.conf设置：监听端口号（需和Spider的交付端口号一致）。
+
+业务流程：
+main：监听端口，建立连接，按照协议Protocol_1接收条目，全部接收完毕后，进行[处理]。
+处理：建立倒排索引，保存 {单词，URL编号} 到数据库Data_DB；保存 {URL编号，URL，Title，Date} 到数据库URL_DB。
