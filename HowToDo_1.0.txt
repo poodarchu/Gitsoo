@@ -14,3 +14,12 @@ Protocol_1：
 Protocol_2：
 先发送字符串"Number:"+number，表示条目个数。
 然后发送number个条目。
+
+数据库
+在服务器2。
+
+表Data_DB：
+{letter as varchar(30),id as long} letter是索引，主码。
+
+表URL_DB：
+{id as long,URL as varchar(100),date as date,title as varchar(30)} id是索引，主码。
