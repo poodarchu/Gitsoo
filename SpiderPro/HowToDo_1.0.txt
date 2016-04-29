@@ -1,0 +1,15 @@
+SpiderPro实现文档1.0
+
+运行在服务器1。
+位于SpiderPro文件夹中。
+
+通过配置文件Spider.conf设置：爬取周期，每次爬取时长，交付阀值，爬取端口号，交付端口号，交付IP，最大标题长度，最大正文长度。
+通过配置文件Spider_IP.conf设置：起始IP。
+
+爬取结果格式：
+URL,Date,TitleLength，DateLength,Title，Date
+使用/n分割每条记录。
+
+业务流程：
+main：程序每隔一定周期进行一次固定长度的爬取，当爬取数独达到阀值，进行活动[交付]
+交付：建立TCP连接到交付IP，交付给程序SavePro，使用协议[Protocol_1]，然后关闭连接。
