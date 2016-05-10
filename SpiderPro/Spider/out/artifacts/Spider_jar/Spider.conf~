@@ -1,0 +1,13 @@
+#目标IP
+destination_ip localhost
+#目标端口
+destination_port 5678
+#交付阀值
+threshold 5
+#爬取时长(单位：秒)
+run_time 60
+#最大标题长度
+title_length 30
+#最大文章长度
+data_length 65536
+

@@ -19,21 +19,24 @@ import timer.*;
 
 public class stackoverflowPipeline implements Pipeline{
 
-    private static Set<String> data = new HashSet<String>();
-    private static Set<String> stopword = new HashSet<String>();
+    private static Set<String> data = new HashSet<String>();//用来保存未发送的数据
+    private static Set<String> stopword = new HashSet<String>();//保存停止词
     Configuration conf = Configuration.getInstance();
     Timer timer = Timer.getInstance();
-    Date date = null;
     Socket server = null;
-    int threshold = 0;
+    int threshold = 0;//交付阀值
     String ip=null;
     int port = 0;
+    int max_title_length = 0;
+    int max_data_length = 0;
     public static String run_time = null;
 
     public stackoverflowPipeline(){
         threshold = Integer.parseInt((String) conf.getConfMap().get("threshold"));
         ip = (String)conf.getConfMap().get("destination_ip");
         port = Integer.parseInt((String) conf.getConfMap().get("destination_port"));
+        max_data_length = Integer.parseInt((String) conf.getConfMap().get("max_data_length"));
+        max_title_length = Integer.parseInt((String) conf.getConfMap().get("max_title_length"));
         loadStopWord("stopwords.txt");
 
     }
@@ -82,13 +85,13 @@ public class stackoverflowPipeline implements Pipeline{
                 server = new Socket(ip,port);
 
                 PrintWriter out = new PrintWriter(server.getOutputStream());
-                out.println("Length:"+Integer.toString(data.size()));
+                out.println("Length:"+Integer.toString(data.size()));//发送 即将发送length条数据
                 for (String str:data){
                     out.println(str);
                 }
                 //out.println("end");
                 try {
-                    Thread.sleep(1500);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -121,7 +124,8 @@ public class stackoverflowPipeline implements Pipeline{
             String Data = processRawData((String) resultItems.getAll().get("question") + (String) resultItems.getAll().get("answer"));
             String TitleLength = Integer.toString(Title.split(" ").length);
             String DataLength = Integer.toString(Data.split(" ").length);
-            Send(URL+","+Date+","+TitleLength+","+DataLength+","+Title+","+Data);
+            if (Integer.parseInt(TitleLength)<=max_title_length&&Integer.parseInt(DataLength)<=max_data_length)
+                Send(URL+","+Date+","+TitleLength+","+DataLength+","+Title+","+Data);
         }
 
 

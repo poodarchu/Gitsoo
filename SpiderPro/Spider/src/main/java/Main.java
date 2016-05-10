@@ -12,6 +12,8 @@ import us.codecraft.webmagic.scheduler.RedisScheduler;
 public class Main {
     public static void main(String[] args) {
 
+
+
         Configuration conf = Configuration.getInstance();
         conf.loadConfFile("Spider.conf");
 
