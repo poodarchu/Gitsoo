@@ -33,20 +33,23 @@ void search(gitsoo_env *env, const char *query) {
   int query32_len;
   UTF32Char *query32;
 
-  if (!utf8toutf32(query, strlen(query), &query32, &query32_len)) {
+  if(!utf8toutf32(query, strlen(query), &query32, &query32_len)) {
     search_results *results = NULL;
 
-    if (query32_len < env->token_len) {
+    if(query32_len < env->token_len) {
       print_error("too short query.");
     } else {
       query_token_hash *query_tokens = NULL;
-      split_query_to_tokens(
-        env, query32, query32_len, env->token_len, &query_tokens);
+      spilt_query_to_tokens(
+        env, query32, query32_len, env->token_len, &query_tokens
+      );
       search_docs(env, &results, query_tokens);
+
+      free(query32);
     }
-
-    print_search_results(env, results);
-
-    free(query32);
   }
+}
+
+void search_docs(gitsoo_env, search_results **results, query_token_hash *tokens) {
+
 }
