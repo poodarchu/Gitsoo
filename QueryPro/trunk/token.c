@@ -91,22 +91,9 @@ int token_to_postings_list(gitsoo_env *env,
 }
 
 
-/**
- * 打印指定的词元
- */
-void dump_token(gitsoo_env *env, int token_id) {
-  int token_len;
-  const char *token;
-
-  db_get_token(env, token_id, &token, &token_len);
-  printf("token: %.*s (id: %d)\n", token_len, token, token_id);
-}
-
-
 //--------------------工具函数-------------------//
-/**
- * 检查输入的字符（UTF-32）是否不属于索引对象
- */
+
+// 检查输入的字符（UTF-32）是否不属于索引对象
 static int gitsoo_is_ignored_char(const UTF32Char ustr) {
   switch (ustr) {
   case ' ': case '\f': case '\n': case '\r': case '\t': case '\v':

@@ -8,8 +8,6 @@ int text_to_postings_lists(gitsoo_env *env,
                            const unsigned int text_len,
                            const int n, inverted_index_hash **postings);
 
-void dump_token(gitsoo_env *env, int token_id);  //打印指定的词元
-
 int token_to_postings_list(gitsoo_env *env,
                            const int document_id, const char *token,
                            const unsigned int token_size,

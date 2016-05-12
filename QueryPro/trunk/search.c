@@ -26,9 +26,7 @@ typedef struct {
   UT_hash_handle hh;　　　　　　　//用于将该结构提转化为哈希表
 } search_results;
 
-/**
- *　检索主函数
- */
+//检索主函数
 void search(gitsoo_env *env, const char *query) {
   int query32_len;
   UTF32Char *query32;
@@ -58,10 +56,10 @@ void search_docs(gitsoo_env *env, search_results **results, query_token_hash *to
 
   if (!tokens) { return; }
 
-  /* 按照文档频率的升序对tokens排序 */
+  //按照文档频率的升序对tokens排序
   HASH_SORT(tokens, query_token_value_docs_count_desc_sort);
 
-  /* 初始化 */
+  //初始化
   n_tokens = HASH_COUNT(tokens);
   if (n_tokens &&
       (cursors = (doc_search_cursor *)calloc(
@@ -71,7 +69,7 @@ void search_docs(gitsoo_env *env, search_results **results, query_token_hash *to
     query_token_value *token;
     for (i = 0, token = tokens; token; i++, token = token->hh.next) {
       if (!token->token_id) {
-        /* 当前的token在构建索引的过程中从未出现过 */
+        //当前的token在构建索引的过程中从未出现过
         goto exit;
       }
       if (fetch_postings(env, token->token_id,
@@ -80,30 +78,29 @@ void search_docs(gitsoo_env *env, search_results **results, query_token_hash *to
         goto exit;
       }
       if (!cursors[i].documents) {
-        /* 虽然当前的token存在，但是由于更新或删除导致其倒排列表为空 */
+        //虽然当前的token存在，但是由于更新或删除导致其倒排列表为空
         goto exit;
       }
       cursors[i].current = cursors[i].documents;
     }
     while (cursors[0].current) {
       int doc_id, next_doc_id = 0;
-      /* 将拥有文档最少的词元称作A */
+      //将拥有文档最少的词元称作A
       doc_id = cursors[0].current->document_id;
-      /* 对于除词元A以外的词元，不断获取其下一个document_id，直到当前的document_id不小于词元A的document_id为止 */
+      // 对于除词元A以外的词元，不断获取其下一个document_id，直到当前的document_id不小于词元A的document_id为止
       for (cur = cursors + 1, i = 1; i < n_tokens; cur++, i++) {
         while (cur->current && cur->current->document_id < doc_id) {
           cur->current = cur->current->next;
         }
         if (!cur->current) { goto exit; }
-        /* 对于除词元A以外的词元，如果其document_id不等于词元A的document_id，*/
-        /* 那么就将这个document_id设定为next_doc_id */
+        // 对于除词元A以外的词元，如果其document_id不等于词元A的document_id,那么就将这个document_id设定为next_doc_id
         if (cur->current->document_id != doc_id) {
           next_doc_id = cur->current->document_id;
           break;
         }
       }
       if (next_doc_id > 0) {
-        /* 不断获取A的下一个document_id，直到其当前的document_id不小于next_doc_id为止 */
+        // 不断获取A的下一个document_id，直到其当前的document_id不小于next_doc_id为止
         while (cursors[0].current
                && cursors[0].current->document_id < next_doc_id) {
           cursors[0].current = cursors[0].current->next;
