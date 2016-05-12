@@ -4,7 +4,7 @@
 #include <utlist.h>
 #include <uthash.h>
 #include <utarray.h>
-
+#include <mysql.h>
 // 2-gram
 #define N_GRAM 2
 
@@ -25,19 +25,33 @@ typedef struct {
   UT_hash_handle hh;            // 用于将该结构体转化为哈希表
 } inverted_index_hash, inverted_index_value;
 
+// 压缩方法
+typedef enum {
+  compress_none
+} compress_method;
+
 // 应用程序的全局配置环境
 typedef struct _gitsoo_env {
   const char *db_path;
 
   int token_len;                  //词元的长度。N-gram中N的取值
   int enable_phrase_search;       // 是否进行短语检索
+  compress_method compress;       // 压缩倒排列表等数据的方法
 
   inverted_index_hash *ii_buffer; //用于更新倒排索引的缓冲区
   int ii_buffer_count;            //用于更新倒排索引的缓冲区中的文档数
   int ii_buffer_update_threshold; //缓冲区中文档数的阈值
   int indexed_count;              //建立了索引的文档数
 
+
+  mysql *db; // mysql的实例
+  mysql_stmt *...;   //all related stmts， 供数据库操作使用
+
 } gitsoo_env;
+
+static int init_env(gitsoo_env *env, int ii_buffer_update_threshold, int enable_phrase_search, const char *db_path);
+
+static void fin_env(gitsoo_env *env);
 
 #ifndef FALSE
 #define FALSE 0

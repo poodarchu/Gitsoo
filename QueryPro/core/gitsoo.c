@@ -1,7 +1,5 @@
+// #include "db_opt" 导入需要的db操作函数
 
-
-/* 判断从地址t开始的、长度为l的二进制序列是否与字符串c一致 */
-#define MEMSTRCMP(t,l,c) (l == (sizeof(c) - 1) && !memcmp(t, c, l))
 
 /**
  * 设定应用程序的运行环境
@@ -9,6 +7,9 @@
  * enable_phrase_search 是否启用短语检索
  * db_path 数据库的路径
  * return 0 成功
+ *
+ * int init_database(gitsoo_env *env, const char *db_path);
+ * fin_database() is also in charge of the db oprations group.--YJH,ZH
  */
 static int init_env(gitsoo_env *env, int ii_buffer_update_threshold, int enable_phrase_search, const char *db_path) {
   int rc;
@@ -20,4 +21,10 @@ static int init_env(gitsoo_env *env, int ii_buffer_update_threshold, int enable_
     env->enable_phrase_search = enable_phrase_search;
   }
   return rc;
+}
+
+//释放应用程序的运行环境
+//fin_database() is in charge of the db oprations group.--YJH,ZH
+static void fin_env(gitsoo_env *env) {
+  fin_database(env);
 }

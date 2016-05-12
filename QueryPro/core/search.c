@@ -3,6 +3,7 @@
 
 #include "util.h"
 #include "token.h"
+#include "gitsoo.h"
 
 //将inverted_index_hash和inverted_index_value和postings_list也用于检索
 typedef inverted_index_hash query_token_hash;
@@ -25,6 +26,52 @@ typedef struct {
   double score;
   UT_hash_handle hh;　　　　　　　//用于将该结构提转化为哈希表
 } search_results;
+
+
+//the entry func
+//argv[0] is db_path, argv[1] is query
+int main(int argc, char *argv[]) {
+  gitsoo_env env;
+  int ii_buffer_update_threshold = DEFAULT_II_BUFFER_UPDATE_THRESHOLD;
+  int enable_phrase_search = TRUE;  //or FALSE
+
+  int rc = init_env(&env, ii_buffer_update_threshold, enable_phrase_search,
+                    argv[0]);
+  const char *query = argv[1];
+  if (!rc) {
+    print_time_diff();
+
+    //先在此将数据存入数据库中
+  }
+
+  // 进行检索
+  //parse_compress_method 压缩方法，默认为none
+  //db_*开头的函数均为数据库操作
+  if (query) {
+    int cm_size;
+    const char *cm;
+    db_get_settings(&env, "compress_method", sizeof("compress_method") - 1, &cm, &cm_size);
+    parse_compress_method(&env, cm, cm_size);
+    env.indexed_count = db_get_document_count(&env);
+    search(&env, query);
+  }
+  fin_env(&env);
+
+  print_time_diff();
+
+  return rc;
+}
+
+//method 压缩倒排列表的方法
+//method_size 压缩方法名称的字节数
+//不使用压缩，以备日后启用压缩
+static void parse_compress_method(gitsoo_env *env, const char *method, int method_size) {
+  if (method && method_size < 0) { method_size = strlen(method); }  //确保method_size的值正确
+
+    env->compress = compress_none;
+
+    db_replace_settings(env, "compress_method", sizeof("compress_method") - 1, "none", sizeof("none") - 1);
+}
 
 //检索主函数
 void search(gitsoo_env *env, const char *query) {
