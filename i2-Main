@@ -1,0 +1,2 @@
+前端以JSON-RPC的方式调用Main，并将用户请求传给它；
+返回Response（JSON格式）给请求它的服务器。
