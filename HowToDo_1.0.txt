@@ -19,7 +19,7 @@ Protocol_1：
 然后发送length条条目，每条条目格式同爬取结果格式。
 
 Protocol_2：
-先发送字符串"Number:"+number，表示条目个数。
+先发送字符串number，表示条目个数。
 然后发送number个条目。
 
 数据库

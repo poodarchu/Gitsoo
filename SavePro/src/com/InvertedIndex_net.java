@@ -9,9 +9,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.sql.*;
+import java.net.*;
 import java.util.ArrayList;
 
-public class InvertedIndex{
+public class InvertedIndex_net{
 	
 	public static boolean saveURL(String url, String date, String[]title) //保存第二张表
 	{
@@ -99,28 +100,43 @@ public class InvertedIndex{
 		return ID;
 	}
 	
-	public static void Insert(String path) throws IOException // 插入数据到数据库
+	public static void Insert(Socket socket) // 插入数据到数据库
 	{
-		File fin = new File(path);
-		BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fin),"UTF-8"));
-		String line = null;
-		int textlong = Integer.parseInt( (line = br.readLine()).trim());
-		while((line = br.readLine())!= null)
-		{
-			String []arg = line.split(",", 6);
-			String URL = arg[0];
-			String date = arg[1];
-			String titlelength = arg[2];
-			String datalength = arg[3];
-			String[] title = arg[4].split(" ", Integer.parseInt(titlelength));
-			String []letter = arg[5].split(" ", Integer.parseInt(datalength));
-			saveURL(URL,date, title); //插入到第二张表
-			for(int i = 0; i < Integer.parseInt(datalength); i++)
+		try {
+			//DataInputStream input=new DataInputStream(socket.getInputStream());
+			BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+			//File fin = new File(path);
+			//BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fin),"UTF-8"));
+			String line = null;
+			int textlong = Integer.parseInt( (line = br.readLine()).trim().substring(7));
+			for(int t=0;t<textlong;++t)
+//			while((line = br.readLine())!= null)
 			{
-				invertedIndex(URL,letter[i]); //实现插入数据到第一张表
+				line=br.readLine();
+				String []arg = line.split(",", 6);
+				String URL = arg[0];
+				String date = arg[1];
+				String titlelength = arg[2];
+				String datalength = arg[3];
+				String[] title = arg[4].split(" ", Integer.parseInt(titlelength));
+				String []letter = arg[5].split(" ", Integer.parseInt(datalength));
+				saveURL(URL,date, title); //插入到第二张表
+				for(int i = 0; i < Integer.parseInt(datalength); i++)
+				{
+					invertedIndex(URL,letter[i]); //实现插入数据到第一张表
+				}
+			}
+			br.close();
+		} catch(Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			try {
+				if(socket!=null) socket.close();
+			} catch(Exception ex) {
+				ex.printStackTrace();
 			}
 		}
-		br.close();
 	}
 	
 	public static void invertedIndex(String url, String letter) // 实现倒排
