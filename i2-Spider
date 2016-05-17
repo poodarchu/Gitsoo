@@ -42,3 +42,5 @@ typedef struct Page {
 
 随后，对json格式的DOM进行解析，gitsoo使用jsoncpp这一开源库进行json的解析，并将相关属性存储到数据库。
 文档数据库需要添加updated属性{0,1}
+数据库表项：
+pageID(primary key), encoding, url, parentPageCount, pageWeigh(default=1), title, timestamp, author, label, text, update(enum{0,1})
