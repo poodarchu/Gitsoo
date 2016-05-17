@@ -36,7 +36,7 @@ typedef struct ScoringCriteria{
 	//using metricsFields to score
 };
 
-搜索结果保存在Response的实例response中：
+搜索结果保存在struct response中：
 response = Searcher.Search(types.SearchRequest{
     Text: "自行车运动",
     RankOptions: &types.RankOptions{
@@ -47,4 +47,12 @@ response = Searcher.Search(types.SearchRequest{
     },
 })
 
-response使用JSON类型表示结果。
+typedef struct {
+	"title": string,
+	"author": string,
+	"timestamp":long long,
+	"abstract": string,
+	"url":string,
+	"OutputOffset: int,  //控制分几页，默认为5
+	"MaxOutputs":int   //控制最多输出几条结果，默认为100
+} response;
