@@ -2,5 +2,14 @@
 然后主协程会通过一个信道（channel）将要分词的文本发送给某个分词协程，
 该协程将文本分词，
 然后通过另一个信道发送给一个索引器协程。
-索引器协程建立从搜索键（search keyword）到文档的反向索引（inverted index），
+索引器协程建立从搜索键（search keyword）到文档的反向索引（inverted index）
+pageID(primary key), encoding, url, parentPageCount, pageWeigh(default=1), title, timestamp, author, label, text, update(enum{0,1})
+ SELECT pageID, text
+倒排索引的数据表：
+tokenID, blob(内存储倒排列表的压缩后序列化得二进制文件);
+
+MaxListLenth=40000(倒排列表的最大长度)
+
+压缩方式：Golomb
+
 反向索引表保存在内存中方便快速调用。
