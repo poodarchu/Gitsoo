@@ -18,8 +18,8 @@ MySQL负责管理文档数据库，文档数据库中存储着作为检索对象
 /types　常用结构体
 /utils 常用函数，比如时间时间戳函数
 /spider Spider位于此，在该文件夹下配置好webmagic
-/server　网站服务器，位于另一个单独的服务器。通过JSON-RPC与Gitsoo后台服务器连接。
-
+/server　网站服务器，位于另一个单独的web服务器。通过JSON-RPC与Gitsoo后台服务器连接。
+/libs 存放项目所需的第三放库
 有关JSON-RPC的内容见：http://wiki.geekdream.com/Specification/json-rpc_2.0.html
 
 Gitsoo Architecture
