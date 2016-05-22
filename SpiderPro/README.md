@@ -29,17 +29,17 @@
 MySQL的IP、端口等配置在jsonToMySQL.conf中配置
 
 **数据库中使用的表的格式**
-Field|Type|Null|Key|Default|Extra
------|-----|-----|-----|-----|
-pageID|int|NO|PRI|NULL|auto_increment
-encoding|varchar(20)|NO| |NULL|
-URL|varchar(150)|NO| |NULL|
-parentPageCount|int|NO| |NULL|
-pageWeigh|int|NO| |NULL|
-title|varchar(100)|NO| |NULL|
-timestamp|varchar(12)|NO| |NULL|
-author|varchar(40)|NO| |NULL|
-label|varchar(150)|NO| |NULL|
-text|varchar(20000)|NO| |NULL|
-update|int|NO| |0|
+|Field|Type|Null|Key|Default|Extra|
+|-----|:-----:|:-----:|:-----:|:-----:|
+|pageID|int|NO|PRI|NULL|auto_increment|
+|encoding|varchar(20)|NO| |NULL||
+|URL|varchar(150)|NO| |NULL||
+|parentPageCount|int|NO| |NULL||
+|pageWeigh|int|NO| |NULL||
+|title|varchar(100)|NO| |NULL||
+|timestamp|varchar(12)|NO| |NULL||
+|author|varchar(40)|NO| |NULL||
+|label|varchar(150)|NO| |NULL||
+|text|varchar(20000)|NO| |NULL||
+|update|int|NO| |0||
 <small>---这只是针对目前所爬的stackoverflow的数据设置的表----</small>
