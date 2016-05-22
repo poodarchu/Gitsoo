@@ -29,17 +29,104 @@
 MySQL的IP、端口等配置在jsonToMySQL.conf中配置
 
 **数据库中使用的表的格式**
-|Field|Type|Null|Key|Default|Extra|
-|-----|:-----:|:-----:|:-----:|:-----:|
-|pageID|int|NO|PRI|NULL|auto_increment|
-|encoding|varchar(20)|NO| |NULL||
-|URL|varchar(150)|NO| |NULL||
-|parentPageCount|int|NO| |NULL||
-|pageWeigh|int|NO| |NULL||
-|title|varchar(100)|NO| |NULL||
-|timestamp|varchar(12)|NO| |NULL||
-|author|varchar(40)|NO| |NULL||
-|label|varchar(150)|NO| |NULL||
-|text|varchar(20000)|NO| |NULL||
-|update|int|NO| |0||
+
+<table class="table table-bordered table-striped table-condensed">
+<tr>
+    <th>Field</th>
+    <th>Type</th>
+    <th> NULL </th>
+    <th> KEY </th>
+    <th>Default</th>
+    <th>Extra</th>
+</tr>
+<tr>
+    <td>pageID</td>
+    <td>int</td>
+    <td>NO</td>
+    <td>PRI</td>
+    <td>NULL</td>
+    <td>auto_increment</td>
+</tr>
+<tr>
+    <td>encoding</td>
+    <td>varchar(20)</td>
+    <td>NO</td>
+    <td></td>
+    <td>NULL</td>
+    <td></td>
+</tr>
+<tr>
+    <td>URL</td>
+    <td>varchar(150)</td>
+    <td>NO</td>
+    <td></td>
+    <td>NULL</td>
+    <td></td>
+</tr>
+<tr>
+    <td>pageWeigh</td>
+    <td>int</td>
+    <td>NO</td>
+    <td></td>
+    <td>NULL</td>
+    <td></td>
+</tr>
+<tr>
+    <td>parentPageCount</td>
+    <td>int</td>
+    <td>NO</td>
+    <td></td>
+    <td>NULL</td>
+    <td></td>
+</tr>
+<tr>
+    <td>title</td>
+    <td>varchar(100)</td>
+    <td>NO</td>
+    <td></td>
+    <td>NULL</td>
+    <td></td>
+</tr>
+<tr>
+    <td>timestamp</td>
+    <td>varchar(12)</td>
+    <td>NO</td>
+    <td></td>
+    <td>NULL</td>
+    <td></td>
+</tr>
+<tr>
+    <td>author</td>
+    <td>varchar(40)</td>
+    <td>NO</td>
+    <td></td>
+    <td>NULL</td>
+    <td></td>
+</tr>
+<tr>
+    <td>label</td>
+    <td>varchar(150)</td>
+    <td>NO</td>
+    <td></td>
+    <td>NULL</td>
+    <td></td>
+</tr>
+<tr>
+    <td>text</td>
+    <td>varchar(20000)</td>
+    <td>NO</td>
+    <td></td>
+    <td>NULL</td>
+    <td></td>
+</tr>
+<tr>
+    <td>update</td>
+    <td>int</td>
+    <td>NO</td>
+    <td></td>
+    <td>0</td>
+    <td></td>
+</tr>
+</table>
+
 <small>---这只是针对目前所爬的stackoverflow的数据设置的表----</small>
