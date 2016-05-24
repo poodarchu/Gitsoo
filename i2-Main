@@ -2,25 +2,32 @@
 -> { "jsonrpc":"2.0", "method":"query", "params":"query_content", "id":1 }
 
 返回Response（JSON格式）给请求它的服务器。
-<- { "jsonrpc":"2.0", "result": {
+<- { "jsonrpc":"2.0", "number":"123","OutputOffset: 0, "MaxOutputs":100,"id":1,
+	  "result": [
+	  {
       "title":"title name",
       "author":"author name",
       "timestamp":201605170928,
       "abstract":"the first 3 line of the content"
-      "url":"url_address",
-      "OutputOffset: 0,
-      "MaxOutputs":100
-      }, "id":1
+      "url":"url_address"
+      }
+      ......
+	  ]
    }
 
-response = query(query_content);
+response query(string query_content,res_item * res);
+// 返回response的number为-1表示服务器错误。
 
 typedef struct {
+	"number":int,
+	"OutputOffset": int,  //控制分几页，默认为5
+	"MaxOutputs":int   //控制最多输出几条结果，默认为100
+} response;
+
+struct {
 	"title": string,
 	"author": string,
 	"timestamp":long long,
 	"abstract": string,
-	"url":string,
-	"OutputOffset: int,  //控制分几页，默认为5
-	"MaxOutputs":int   //控制最多输出几条结果，默认为100
-} response;
+	"url":string
+} res_item;
