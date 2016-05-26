@@ -1,6 +1,6 @@
-# SpiderPro
+# spider
 ***
-##spider
+##spiderCore
 **Main：**主函数 包含导入配置文件和调用爬虫
 **spider:** 爬虫爬取程序(包含抓取的逻辑)
 **pipeline:** 处理爬取(包含将抓取到的数据存进json文件)
