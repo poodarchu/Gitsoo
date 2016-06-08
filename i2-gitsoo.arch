@@ -10,7 +10,6 @@ Searcher：负责根据Tokenizer处理后查询，协同Indexer进行检索处�
 MySQL负责管理文档数据库，文档数据库中存储着作为检索对象的文档，文档管理器先从文档管理器中取出与查询相匹配文档，在根据需要从文档中提取处一部分
 内容作为摘要。MySQL仅仅对应docID来保存文档内容。MySQL管理的文档数据库在构建索引之前构建。
 
-/core　核心部件，包括Indexer和Searcher
 /data　Tokenizer所需的字典文件和停用词文件
 /docs  Gitsoo项目的各种文档，比如需求文档，性能测试文档
 /engine　引擎，包括Main, Tokenizer, Indexer和Searcher的实现
