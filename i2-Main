@@ -2,7 +2,7 @@
 -> { "jsonrpc":"2.0", "method":"query", "params":"query_content", "id":1 }
 
 返回Response（JSON格式）给请求它的服务器。
-<- { "jsonrpc":"2.0", "number":"123","OutputOffset: 0, "MaxOutputs":100,"id":1,
+<- { "jsonrpc":"2.0", "number":123,"OutputOffset: 0, "MaxOutputs":100,"id":1,
 	  "result": [
 	  {
       "title":"title name",
@@ -15,8 +15,9 @@
 	  ]
    }
 
-response query(string query_content,res_item * res);
+response query(string query_content,res_item * & res);
 // 返回response的number为-1表示服务器错误。
+// 在query函数里面new res的内存空间。
 
 typedef struct {
 	"number":int,
