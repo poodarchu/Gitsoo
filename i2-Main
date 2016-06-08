@@ -15,7 +15,7 @@
 	  ]
    }
 
-response query(string query_content,res_item * & res);
+response query(const string query_content,res_item * & res);
 // 返回response的number为-1表示服务器错误。
 // 在query函数里面new res的内存空间。
 
