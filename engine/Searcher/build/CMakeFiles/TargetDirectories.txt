@@ -1,0 +1,3 @@
+/Users/poodar/Development/Projs/Gitsoo/engine/Searcher/build/CMakeFiles/edit_cache.dir
+/Users/poodar/Development/Projs/Gitsoo/engine/Searcher/build/CMakeFiles/rebuild_cache.dir
+/Users/poodar/Development/Projs/Gitsoo/engine/Searcher/build/CMakeFiles/gs_searcher.dir
