@@ -1,4 +1,4 @@
 all: 
-	g++ -o demo -O3 -DLOGGER_LEVEL=LL_WARN -Wall -g test.cpp 
+	g++ -o searcher -O3 -DLOGGER_LEVEL=LL_WARN -Wall -g searcher.cpp 
 clean:
-	rm -f *.o *.a demo
+	rm -f *.o *.a searcher

@@ -2,7 +2,11 @@
 #define __SEARCHER_H__
 
 #include "../../types/types.h"
+#include <string>
+#include <vector>
 
-response query(const string query_content,res_item * & res);
+using namespace std;
+
+response query(const string query_content, vector<res_item> res_items)
 
 #endif

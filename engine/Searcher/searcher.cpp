@@ -1,59 +1,83 @@
-#include "include/cppjieba/Jieba.hpp"
-#include "include/cppjieba/KeywordExtractor.hpp"
-#include "../deps/limonp/*.hpp"
-
-#include <vector>
 #include <string>
+#include <vector>
 
-using namespace std;
+#include "../Tokenizer/include/Application.hpp"
+#include "../../types/types.h"
 
-const char* const DICT_PATH = "../dict/jieba.dict.utf8";
-const char* const HMM_PATH = "../dict/hmm_model.utf8";
-const char* const USER_DICT_PATH = "../dict/user.dict.utf8";
-const char* const IDF_PATH = "../dict/idf.utf8";
-const char* const STOP_WORD_PATH = "../dict/stop_words.utf8";
+using namespace CppJieba;
+using std::string;
+using std::vector;
+
+const char* const DICT_PATH = "../Tokenizer/dict/jieba.dict.utf8";
+const char* const HMM_PATH = "../Tokenizer/dict/hmm_model.utf8";
+const char* const USER_DICT_PATH = "../Tokenizer/dict/user.dict.utf8";
+const char* const IDF_PATH = "../Tokenizer/dict/idf.utf8";
+const char* const STOP_WORD_PATH = "../Tokenizer/dict/stop_words.utf8";
 
 string
-strToUTF8Str(const string query_content, string utf8Str);
+strToUTF8Str(const string query_content) {
+	string s = query_content;
+
+	return s;
+}
 
 void
-searchWithOffset(res_item* res, vector<cppjieba::Word> jiebaWords);
+search_pages(vector<res_item> &res_items, vector<string> words);
 
 void
-printSearchResults(res_item* res);
+printSearchResults(const vector<res_item> res_items);
 
-response query(const string query_content,res_item* res) {
+void
+tokenize(string query, vector<string> &words) {
+	CppJieba::Application app(DICT_PATH,
+                            HMM_PATH,
+                            USER_DICT_PATH,
+                            IDF_PATH,
+                            STOP_WORD_PATH);
+  	string result;
+  	string s = query;
+
+  	app.cut(s, words, METHOD_QUERY);
+  	cout << join(words.begin(), words.end(), "/") << endl;
+}
+
+response query(const string query_content, vector<res_item> res_items) {
+	response res;
 
 	string s = strToUTF8Str(query_content);
-	string result;
-
+	
 	/**
 	 *  Tokenizer Part.
 	 */
-	cppjieba::Jieba jieba(DICT_PATH, HMM_PATH, USER_DICT_PATH);
-
-	//store the cut words in words : vector<string>
 	vector<string> words;
-	//words with loc offset info.
-	vector<cppjieba::Word> jiebaWords;
-
-	jieba.CutForSearch(s, words);
-	//debug dump output.
-	result = limonp::Join(words.begin(), words.end(), "/");
-	cout << result << endl;
-
-	cout << "CutForSearch Word With Offset" << endl;
-	jieba.CutForSearch(s, jiebaWords, true);
-	cout << jiebaWords << endl;
-
-
+	tokenize(s, words);
 
 	/**
-	 *  Use the cut words to query database, store the result in res.
+	 *  Use the cut words to query database, store the result in res_items.
 	 */
-	searchWithOffset(res, jiebaWords);
+	 // search_pages(res_items, words);
+
 	//debug dump output.
-	printSearchResults(res);
+	// printSearchResults(res_items);
+
+	//make res.
+	res.number = res_items.size() > 100 ? 100 : res_items.size();
+	res.OutputOffset = 5;
+	res.MaxOutputs = 100;
+	res.res_items = res_items;
 
 	return res;
+}
+
+// test demo
+int main(int argc, char** argv) {
+
+  vector<res_item> res_items;
+  vector<string> words;
+
+  const string s = "我是拖拉机学院手扶拖拉机专业的。不用多久，我就会升职加薪，当上CEO，走上人生巅峰。";
+
+  query(s, res_items);
+
+  return 0;
 }
