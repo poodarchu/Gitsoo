@@ -130,3 +130,7 @@ MySQL的IP、端口等配置在jsonToMySQL.conf中配置
 </table>
 
 <small>---这只是针对目前所爬的stackoverflow的数据设置的表----</small>
+***
+##output
+包含打包后的jar文件及抓取后的例子
+####使用jar方法： java -jar ***.jar
